@@ -7,24 +7,44 @@ on:
     branches: [ main ] 
 env:
   AWS_REGION: 'eu-west-2'
-# Permission can be added at job level or workflow level    
+
 permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
+
 jobs:
   AssumeRoleAndCallIdentity:
     runs-on: ubuntu-latest  
     steps:
       - name: Git clone the repository
         uses: actions/checkout@master
+
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::407026129471:role/GitHubAction-AssumeRoleWithAction #change to reflect your IAM role’s ARN
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-      # Hello from AWS: WhoAmI
+
       - name: Sts GetCallerIdentity
         run: |
           aws sts get-caller-identity
+
+      - name: Assume AWS Role
+        id: assume_role
+        run: |
+          ROLE=$(aws iam get-role --role-name GitHubActionsRole --query 'Role.Arn' --output text)
+          TEMP_ROLE=$(aws sts assume-role --role-arn $ROLE --role-session-name GitHubActions --output json)
+#          echo "::set-output name=AWS_ACCESS_KEY_ID::$(echo $TEMP_ROLE | jq -r .Credentials.AccessKeyId)"
+#          echo "::set-output name=AWS_SECRET_ACCESS_KEY::$(echo $TEMP_ROLE | jq -r .Credentials.SecretAccessKey)"
+#          echo "::set-output name=AWS_SESSION_TOKEN::$(echo $TEMP_ROLE | jq -r .Credentials.SessionToken)"
+      - name: Terraform Init & Apply
+        run: |
+          terraform init
+          terraform apply -auto-approve        # env:
+#          AWS_ACCESS_KEY_ID: ${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}
+#          AWS_SESSION_TOKEN: ${{ steps.assume_role.outputs.AWS_SESSION_TOKEN }}
+
+
 
