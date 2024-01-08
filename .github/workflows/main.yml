@@ -11,12 +11,14 @@ env:
 permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
+
 jobs:
   AssumeRoleAndCallIdentity:
     runs-on: ubuntu-latest  
     steps:
       - name: Git clone the repository
         uses: actions/checkout@master
+
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
@@ -25,8 +27,9 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Sts GetCallerIdentity
-        run: |
+        run:
           aws sts get-caller-identity
+          
       - name: Deploy code to Lambda
         uses: mariamrf/py-lambda-action@v1.0.0
         with:
