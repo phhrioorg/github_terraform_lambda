@@ -35,3 +35,19 @@ jobs:
         with:
           lambda_layer_arn: 'arn:aws:lambda:eu-west-2:407026129471:function:my-github-test'
           lambda_function_name: 'my-github-test'
+
+      - name: Assume AWS Role
+        id: assume_role
+        run: |
+          ROLE=$(aws iam get-role --role-name GitHubActionsRole --query 'Role.Arn' --output text)
+          TEMP_ROLE=$(aws sts assume-role --role-arn $ROLE --role-session-name GitHubActions --output json)
+#          echo "::set-output name=AWS_ACCESS_KEY_ID::$(echo $TEMP_ROLE | jq -r .Credentials.AccessKeyId)"
+#          echo "::set-output name=AWS_SECRET_ACCESS_KEY::$(echo $TEMP_ROLE | jq -r .Credentials.SecretAccessKey)"
+#          echo "::set-output name=AWS_SESSION_TOKEN::$(echo $TEMP_ROLE | jq -r .Credentials.SessionToken)"
+      - name: Terraform Init & Apply
+        run: |
+          terraform init
+#          terraform apply -auto-approve        # env:
+#          AWS_ACCESS_KEY_ID: ${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}
+#          AWS_SESSION_TOKEN: ${{ steps.assume_role.outputs.AWS_SESSION_TOKEN }}
