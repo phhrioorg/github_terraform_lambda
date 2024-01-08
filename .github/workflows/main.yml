@@ -27,3 +27,8 @@ jobs:
       - name: Sts GetCallerIdentity
         run: |
           aws sts get-caller-identity
+      - name: Deploy code to Lambda
+        uses: mariamrf/py-lambda-action@v1.0.0
+        with:
+          lambda_layer_arn: 'arn:aws:lambda:eu-west-2:407026129471:function:my-github-test'
+          lambda_function_name: 'my-github-test'
