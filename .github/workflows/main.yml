@@ -1,8 +1,8 @@
 name: deploy to lambda
 # Controls when the action will run. Invokes the workflow on push events but only for the main branch
 on:
-  push:
-    branches: [ main ]
+#  push:
+#    branches: [ main ]
   pull_request:
     branches: [ main ] 
 
