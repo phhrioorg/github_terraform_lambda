@@ -5,7 +5,7 @@ terraform {
   }
 }
 
-#data "terraform_remote_state" "master_state" {
+#data "terraform_remote_state" "network" {
 #  backend = "s3"
 #  config = {
 #    bucket = "${var.csp_tf_s3_bucket}"
