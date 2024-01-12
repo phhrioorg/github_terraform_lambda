@@ -52,9 +52,9 @@ jobs:
 ##          echo "::set-output name=AWS_ACCESS_KEY_ID::$(echo $TEMP_ROLE | jq -r .Credentials.AccessKeyId)"
 ##          echo "::set-output name=AWS_SECRET_ACCESS_KEY::$(echo $TEMP_ROLE | jq -r .Credentials.SecretAccessKey)"
 ##          echo "::set-output name=AWS_SESSION_TOKEN::$(echo $TEMP_ROLE | jq -r .Credentials.SessionToken)"
-#      - name: Terraform Init & Apply
-#        run: |
-#          terraform init
+      - name: Terraform Init & Apply
+        run: |
+          terraform init
 ##          terraform apply -auto-approve        # env:
 ##          AWS_ACCESS_KEY_ID: ${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}
 ##          AWS_SECRET_ACCESS_KEY: ${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}
