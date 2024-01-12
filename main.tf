@@ -10,3 +10,7 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
 }
+
+module "statefile" {
+  source = "./states/"
+}
