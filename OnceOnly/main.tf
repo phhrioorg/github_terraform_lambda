@@ -9,5 +9,5 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region  = var.region_dev
+  region  = var.csp_region
 }
