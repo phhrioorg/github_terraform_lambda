@@ -10,5 +10,5 @@ output "dynamodb_table" {
 
 output "terraform_iam_policy" {
   description = "The IAM Policy to access remote state environment."
-  value       = var.terraform_iam_policy_create ? aws_iam_policy.terraform[0] : null
+  value       = aws_iam_policy.terraform
 }
