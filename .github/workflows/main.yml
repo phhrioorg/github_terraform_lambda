@@ -17,12 +17,6 @@ permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
 
-jobs:
-  CredentialsRoleAndCallIdentity:
-    runs-on: [self-hosted, linux, X64]                  # was   runs-on: ubuntu-latest  
-    environment:
-      name: development
-
 #jobs:
 #  CredentialsRoleAndCallIdentity:
 #    runs-on: [self-hosted, linux, X64]                  # was   runs-on: ubuntu-latest  
