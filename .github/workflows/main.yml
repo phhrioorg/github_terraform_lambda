@@ -25,9 +25,9 @@ permissions:
 
 jobs:
   CredentialsRoleAndCallIdentity:
+  runs-on: [self-hosted, linux, X64]                  # was   runs-on: ubuntu-latest  
   environment:
     name: production
-  runs-on: [self-hosted, linux, X64]                  # was   runs-on: ubuntu-latest  
     steps:
       - name: Git clone the repository
         uses: actions/checkout@master
