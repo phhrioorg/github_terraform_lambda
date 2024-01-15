@@ -20,9 +20,9 @@ permissions:
 jobs:
   CredentialsRoleAndCallIdentity:
   environment:
-#    name: production
+    name: production
 #      if: ${{ github.event.label.name == 'bug' }}
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]                  # was   runs-on: ubuntu-latest  
     environment:
       name: development
