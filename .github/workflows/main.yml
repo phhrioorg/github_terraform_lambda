@@ -3,6 +3,8 @@ name: deploy to lambda
 on:
 #  push:
 #    branches: [ main ]
+  environment: 
+    name: production
   pull_request:
     branches: [ main ] 
 
