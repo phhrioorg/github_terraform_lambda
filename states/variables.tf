@@ -16,7 +16,7 @@ variable "csp_region" {
 
 variable "csp_tf_s3_bucket" {
   type    = string
-  default = "csp-tf-state-bucket20240112"
+  default = "phh-tf-state-bucket"
 }
 
 variable "csp_tf_state_key" {
@@ -31,7 +31,7 @@ variable "csp_tf_state_key" {
 variable "state_bucket_prefix" {
   description = "Creates a unique state bucket name beginning with the specified prefix."
   type        = string
-  default     = "csp-tf-state-bucket"
+  default     = "phh-tf-state-bucket"
 }
 
 variable "iam_role_arn" {
@@ -70,7 +70,7 @@ variable "s3_logging_target_prefix" {
 variable "dynamodb_table_name" {
   description = "The name of the DynamoDB table to use for state locking."
   type        = string
-  default     = "csp-tf-state-state-lock"
+  default     = "phh-tf-state-lock"
 }
 
 variable "dynamodb_table_billing_mode" {
@@ -87,7 +87,7 @@ variable "dynamodb_deletion_protection_enabled" {
 
 variable "tf_s3_bucket" {
   type    = string
-  default = "csp-tf-state-bucket20240112"
+  default = "phh-tf-state-bucket"
   #  validation {
   #    condition     = length(var.s3_bucket_name) == 0 || length(regexall("^[a-z0-9][a-z0-9\\-.]{1,61}[a-z0-9]$", var.s3_bucket_name)) > 0
   #    error_message = "Input variable s3_bucket_name is invalid. Please refer to https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html."
@@ -96,5 +96,5 @@ variable "tf_s3_bucket" {
 
 variable "terraform_iam_policy_name" {
   type        = string
-  default     = "csp-tf-state-policy"
+  default     = "phh-tf-state-policy"
 }
