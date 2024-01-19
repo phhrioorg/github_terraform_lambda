@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "csp-tf-state-bucket20240112"
+    bucket = "phh-tf-state-bucket"
     key    = "aws_dynamodb_table.hash_key"
   }
 }
