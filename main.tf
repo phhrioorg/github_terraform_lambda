@@ -11,6 +11,3 @@ terraform {
 provider "aws" {
 }
 
-module "statefile" {
-  source = "./states/"
-}
