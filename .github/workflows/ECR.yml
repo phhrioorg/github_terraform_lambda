@@ -1,0 +1,68 @@
+name: Create ECR
+# Controls when the action will run. Invokes the workflow on push events but only for the main branch
+on:
+  push:
+    branches:
+      - 'ecr'
+env:
+    REPOSITORY_OWNER: '${{ github.repository_owner}}' 
+    BRANCH_NAME:      '${{ github.ref_name }}'
+    ECR_NAME:         '${{ [vars.ECR_NAME] }}'
+    BUCKET:           '${{ vars.TF_STATES_BUCKET }}'
+    STATE_FILE:       '${{ vars.TF_STATES_FILE}}'
+    STATE_FILE_STATE:  0
+    
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
+
+jobs:
+  CredentialsRoleAndCallIdentity:
+    runs-on: [self-hosted, linux, X64]                  # was   runs-on: ubuntu-latest  
+    environment:
+      name: development
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@master
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/GitHubAction-AssumeRoleWithAction
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Sts GetCallerIdentity
+        run:
+          aws sts get-caller-identity
+          
+#      - name: Deploy code to Lambda
+#        uses: mariamrf/py-lambda-action@v1.0.0
+#        with:
+#          lambda_layer_arn: 'arn:aws:lambda::${{ secrets.AWS_ACCOUNT }}:function:my-github-test'
+#          lambda_function_name: 'my-github-test'
+#
+#      - name: Assume AWS Role
+#        id: assume_role
+#        run: |
+#          ROLE=$(aws iam get-role --role-name GitHubActionsRole --query 'Role.Arn' --output text)
+#          TEMP_ROLE=$(aws sts assume-role --role-arn $ROLE --role-session-name GitHubActions --output json)
+##          echo "::set-output name=AWS_ACCESS_KEY_ID::$(echo $TEMP_ROLE | jq -r .Credentials.AccessKeyId)"
+##          echo "::set-output name=AWS_SECRET_ACCESS_KEY::$(echo $TEMP_ROLE | jq -r .Credentials.SecretAccessKey)"
+##          echo "::set-output name=AWS_SESSION_TOKEN::$(echo $TEMP_ROLE | jq -r .Credentials.SessionToken)"
+      - name: Terraform Init
+        run: |
+          terraform init
+      - name: Terraform Fmt
+        run: |
+          terraform fmt
+      - name: Terraform Validate
+        run: |
+          terraform validate -var "ecr_name=$ECR_NAME"
+      - name: Terraform Plan
+        run: |
+          terraform plan
+##          terraform apply -auto-approve        # env:
+##          AWS_ACCESS_KEY_ID: ${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}
+##          AWS_SECRET_ACCESS_KEY: ${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}
+##          AWS_SESSION_TOKEN: ${{ steps.assume_role.outputs.AWS_SESSION_TOKEN }}
