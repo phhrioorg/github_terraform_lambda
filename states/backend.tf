@@ -2,6 +2,7 @@ terraform {
   backend "s3" {
     bucket = "phh-tf-state-bucket"
     key    = "aws_dynamodb_table.hash_key"
+    region = "eu-west-2"
   }
 }
 
