@@ -39,6 +39,12 @@ resource "aws_s3_bucket" "state" {
   tags          = var.tags
 }
 
+resource "aws_s3_bucket" "state_logs" {
+  count         = var.s3_logging_target_bucket != null ? 1 : 0
+  bucket        = var.s3_logging_target_bucket
+  tags          = var.tags
+}
+
 resource "aws_s3_bucket_ownership_controls" "state" {
   bucket = aws_s3_bucket.state.id
   rule {
@@ -61,9 +67,9 @@ resource "aws_s3_bucket_versioning" "state" {
 
 resource "aws_s3_bucket_logging" "state" {
   count         = var.s3_logging_target_bucket != null ? 1 : 0
-  bucket        = aws_s3_bucket.state.id
+  bucket        = aws_s3_bucket.state_logs[count.index].id
   target_bucket = var.s3_logging_target_bucket
-  target_prefix = var.s3_logging_target_prefix
+  target_prefix = "tf_logs/"
 }
 
 resource "aws_s3_bucket_public_access_block" "state" {
