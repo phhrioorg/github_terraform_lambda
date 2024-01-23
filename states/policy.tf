@@ -8,8 +8,8 @@
 #---------------------------------------------------------------------------------------------------
 
 resource "aws_iam_policy" "terraform" {
-  name        = var.terraform_iam_policy_name
-  policy      = <<POLICY
+  name   = var.terraform_iam_policy_name
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [

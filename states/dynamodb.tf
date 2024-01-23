@@ -19,7 +19,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
     enabled = var.dynamodb_point_in_time_recovery
   }
   server_side_encryption {
-    enabled = var.dynamodb_enable_server_side_encryption
+    enabled     = var.dynamodb_enable_server_side_encryption
     kms_key_arn = aws_kms_key.this.arn
   }
   tags = var.tags

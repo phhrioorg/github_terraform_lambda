@@ -40,9 +40,9 @@ resource "aws_s3_bucket" "state" {
 }
 
 resource "aws_s3_bucket" "state_logs" {
-  count         = var.s3_logging_target_bucket != null ? 1 : 0
-  bucket        = var.s3_logging_target_bucket
-  tags          = var.tags
+  count  = var.s3_logging_target_bucket != null ? 1 : 0
+  bucket = var.s3_logging_target_bucket
+  tags   = var.tags
 }
 
 resource "aws_s3_bucket_ownership_controls" "state" {
@@ -85,7 +85,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "state" {
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm     = "aws:kms"
-      kms_master_key_id    = aws_kms_key.this.arn         
+      kms_master_key_id = aws_kms_key.this.arn
     }
   }
 }

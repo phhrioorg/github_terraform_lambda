@@ -87,13 +87,13 @@ variable "dynamodb_enable_server_side_encryption" {
 }
 
 variable "terraform_iam_policy_name" {
-  type        = string
-  default     = "uk-copps-tf-policy"
+  type    = string
+  default = "uk-copps-tf-policy"
 }
 
 variable "dynamodb_point_in_time_recovery" {
-  type        = bool
-  default     = true
+  type    = bool
+  default = true
 }
 
 #---------------------------------------------------------------------------------------------------

@@ -5,11 +5,11 @@
 #
 terraform {
   backend "s3" {
-    bucket = "phh-copps-tf-b"
-    key    = "Initial"
+    bucket         = "phh-copps-tf-b"
+    key            = "Initial"
     dynamodb_table = "uk-copps-tf-ddb"
     encrypt        = true
-    region = "eu-west-2"
+    region         = "eu-west-2"
   }
 }
 
