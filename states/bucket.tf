@@ -34,7 +34,6 @@ resource "aws_s3_bucket_policy" "state_force_ssl" {
 }
 
 resource "aws_s3_bucket" "state" {
-  #  bucket_prefix = var.override_s3_bucket_name ? null : var.state_bucket_prefix
   bucket        = var.tf_s3_bucket
   force_destroy = var.s3_bucket_force_destroy
   tags          = var.tags
@@ -73,4 +72,14 @@ resource "aws_s3_bucket_public_access_block" "state" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "state" {
+  bucket = aws_s3_bucket.state.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id    = aws_kms_key.this.arn         
+    }
+  }
 }

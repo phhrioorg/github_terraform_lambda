@@ -5,7 +5,7 @@ output "state_bucket" {
 
 output "dynamodb_table" {
   description = "The DynamoDB table to manage lock states."
-  value       = aws_dynamodb_table.lock
+  value       = aws_dynamodb_table.terraform_locks.name
 }
 
 output "terraform_iam_policy" {

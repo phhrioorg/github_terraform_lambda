@@ -31,7 +31,7 @@ resource "aws_iam_policy" "terraform" {
         "dynamodb:DeleteItem",
         "dynamodb:DescribeTable"
       ],
-      "Resource": "${aws_dynamodb_table.lock.arn}"
+      "Resource": "${aws_dynamodb_table.terraform_locks.arn}"
     },
     {
       "Effect": "Allow",
