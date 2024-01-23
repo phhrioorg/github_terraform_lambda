@@ -3,10 +3,7 @@
 #---------------------------------------------------------------------------------------------------
 
 locals {
-  # The table must have a primary key named LockID.
-  # See https://www.terraform.io/docs/backends/types/s3.html#dynamodb_table
-# lock_key_id = "LockID"
-  lock_key_id = "Initial"
+  lock_key_id = "LockID"
 }
 
 resource "aws_dynamodb_table" "terraform_locks" {

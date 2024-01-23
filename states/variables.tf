@@ -21,7 +21,7 @@ variable "aws_region" {
 
 variable "tf_s3_bucket" {
   type    = string
-  default = "uk-copps-tf-b"
+  default = "phh-copps-tf-b"
   #  validation {
   #    condition     = length(var.s3_bucket_name) == 0 || length(regexall("^[a-z0-9][a-z0-9\\-.]{1,61}[a-z0-9]$", var.s3_bucket_name)) > 0
   #    error_message = "Input variable s3_bucket_name is invalid. Please refer to https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html."
@@ -31,7 +31,7 @@ variable "tf_s3_bucket" {
 variable "s3_logging_target_bucket" {
   description = "The name of the bucket for log storage. The \"S3 log delivery group\" should have Objects-write and ACL-read permissions on the bucket."
   type        = string
-  default     = "uk-copps-tf-logs"
+  default     = "phh-copps-tf-logs"
 }
 
 variable "iam_role_arn" {
